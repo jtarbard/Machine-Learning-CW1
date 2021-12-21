@@ -126,13 +126,8 @@ class MLP:
         # output layer
         # compute the forward pass on the output layer with softmax function
         outputs = np.dot(self.hidden2, self.weights3)
-        
-        for i in range(len(outputs)):
-            summ = 0.0
-            for j in range(len(outputs[0])):
-                summ += np.exp(outputs[i][j])
-            for j in range(len(outputs[0])):
-                outputs[i][j] = np.exp(outputs[i][j]) / summ
+        normalisers = np.sum(np.exp(outputs), axis = 1) * np.ones((1, np.shape(outputs)[0]))
+        outputs = np.transpose(np.transpose(np.exp(outputs)) / normalisers)
         
         #############################################################################
         # END of YOUR CODE
